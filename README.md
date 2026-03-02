@@ -13,8 +13,8 @@
 ```
 
 ![Profile Views](https://komarev.com/ghpvc/?username=iamacat02&label=Profile%20Views&color=0e75b6&style=for-the-badge)
-![GitHub Followers](https://img.shields.io/github/followers/kj-anis?color=4f46e5&style=for-the-badge)
-![Stars](https://img.shields.io/github/stars/kj-anis?color=fbbf24&style=for-the-badge)
+![GitHub Followers](https://img.shields.io/github/followers/iamacat02?color=4f46e5&style=for-the-badge)
+![Stars](https://img.shields.io/github/starsiamacat02?color=fbbf24&style=for-the-badge)
 
 </div>
 
