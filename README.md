@@ -1,16 +1,8 @@
-# 👋 Hello, I'm Ar Asiful Islam!
+<div align="center">
+  <img src="header.svg" width="800" alt="Ar Asiful Islam's Header" />
+</div>
 
 <div align="center">
-
-```yaml
-╔══════════════════════════════════════════════════════════════════╗
-║                                                                  ║
-║   🚀  Full-Stack Mobile & Web Developer                         ║
-║   🎯  Building Cross-Platform Experiences                        ║
-║   💻  Java | Kotlin | Flutter | React                           ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
-```
 
 ![Profile Views](https://komarev.com/ghpvc/?username=iamacat02&label=Profile%20Views&color=0e75b6&style=for-the-badge)
 ![GitHub Followers](https://img.shields.io/github/followers/iamacat02?color=4f46e5&style=for-the-badge)
