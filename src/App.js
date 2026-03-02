@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import {
   FaFlutter,
   FaReact,
@@ -15,6 +20,8 @@ import {
   FaRocket,
   FaHeart,
   FaStar,
+  FaBolt,
+  FaLayerGroup,
 } from "react-icons/fa";
 import {
   SiKotlin,
@@ -121,17 +128,15 @@ const projects = [
 ];
 
 function App() {
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 1000], [0, -200]);
-
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    setIsLoaded(true);
     const handleMouseMove = (e) => {
       setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
+        x: (e.clientX / window.innerWidth - 0.5) * 30,
+        y: (e.clientY / window.innerHeight - 0.5) * 30,
       });
     };
     window.addEventListener("mousemove", handleMouseMove);
@@ -140,433 +145,521 @@ function App() {
 
   return (
     <div style={styles.container}>
-      {/* Animated Background */}
+      {/* Always Animated Background */}
       <div style={styles.background}>
-        {[...Array(50)].map((_, i) => (
+        {/* Floating orbs */}
+        {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
+            style={{
+              ...styles.orb,
+              left: `${10 + i * 12}%`,
+              top: `${15 + (i % 3) * 25}%`,
+              background:
+                i % 2 === 0
+                  ? "radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%)"
+                  : "radial-gradient(circle, rgba(240, 147, 251, 0.3) 0%, transparent 70%)",
+            }}
+            animate={{
+              y: [0, -80, 0],
+              x: [0, 40, 0],
+              scale: [1, 1.4, 1],
+              opacity: [0.3, 0.7, 0.3],
+            }}
+            transition={{
+              duration: 4 + i * 0.5,
+              repeat: Infinity,
+              delay: i * 0.3,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+
+        {/* Animated grid */}
+        <div style={styles.gridBackground}>
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={`grid-${i}`}
+              style={{
+                ...styles.gridLine,
+                left: `${i * 5}%`,
+              }}
+              animate={{
+                opacity: [0.03, 0.08, 0.03],
+              }}
+              transition={{
+                duration: 2 + i * 0.1,
+                repeat: Infinity,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Floating particles */}
+        {[...Array(60)].map((_, i) => (
+          <motion.div
+            key={`particle-${i}`}
             style={{
               ...styles.particle,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              width: `${Math.random() * 4 + 2}px`,
-              height: `${Math.random() * 4 + 2}px`,
+              width: `${Math.random() * 3 + 1}px`,
+              height: `${Math.random() * 3 + 1}px`,
             }}
             animate={{
-              y: [0, -100, 0],
-              opacity: [0.2, 1, 0.2],
-              scale: [1, 1.5, 1],
+              y: [0, -150, 0],
+              x: [0, Math.random() * 50 - 25, 0],
+              opacity: [0.2, 0.9, 0.2],
+              scale: [1, 1.8, 1],
             }}
             transition={{
-              duration: 2 + Math.random() * 3,
+              duration: 3 + Math.random() * 4,
               repeat: Infinity,
               delay: Math.random() * 2,
               ease: "easeInOut",
             }}
           />
         ))}
-
-        {/* Floating Shapes */}
-        <motion.div
-          style={styles.floatingShape1}
-          animate={{
-            rotate: 360,
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-            scale: { duration: 3, repeat: Infinity },
-          }}
-        />
-        <motion.div
-          style={styles.floatingShape2}
-          animate={{
-            rotate: -360,
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            rotate: { duration: 25, repeat: Infinity, ease: "linear" },
-            scale: { duration: 4, repeat: Infinity },
-          }}
-        />
       </div>
 
-      {/* Hero Section */}
-      <motion.section
-        style={{ ...styles.hero, y: mousePosition.y }}
-        initial="hidden"
-        animate="visible"
-        variants={{
-          visible: { transition: { staggerChildren: 0.1 } },
-        }}
-      >
-        <motion.div
-          style={styles.avatarContainer}
-          variants={{
-            hidden: { scale: 0, opacity: 0 },
-            visible: {
-              scale: 1,
-              opacity: 1,
-              transition: { type: "spring", stiffness: 200 },
-            },
-          }}
-          whileHover={{ scale: 1.1, rotate: 5 }}
-        >
+      <AnimatePresence>
+        {isLoaded && (
           <motion.div
-            style={styles.avatarGlow}
-            animate={{
-              boxShadow: [
-                "0 0 20px rgba(102, 126, 234, 0.5)",
-                "0 0 40px rgba(102, 126, 234, 0.8)",
-                "0 0 60px rgba(240, 147, 251, 0.6)",
-                "0 0 40px rgba(102, 126, 234, 0.8)",
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity }}
-          />
-          <motion.div
-            style={styles.avatar}
-            animate={{
-              rotate: [0, 360],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            style={{ ...styles.content, y: mousePosition.y * 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
           >
-            <span style={styles.avatarText}>AA</span>
-          </motion.div>
-        </motion.div>
-
-        <motion.h1
-          style={styles.name}
-          variants={{
-            hidden: { y: 50, opacity: 0 },
-            visible: {
-              y: 0,
-              opacity: 1,
-              transition: { type: "spring", stiffness: 100 },
-            },
-          }}
-        >
-          <motion.span
-            animate={{
-              textShadow: [
-                "0 0 10px rgba(102, 126, 234, 0.5)",
-                "0 0 20px rgba(102, 126, 234, 0.8)",
-                "0 0 30px rgba(240, 147, 251, 0.6)",
-                "0 0 20px rgba(102, 126, 234, 0.8)",
-              ],
-            }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            Ar Asiful Islam
-          </motion.span>
-        </motion.h1>
-
-        <motion.p
-          style={styles.title}
-          variants={{
-            hidden: { y: 30, opacity: 0 },
-            visible: { y: 0, opacity: 1, transition: { delay: 0.3 } },
-          }}
-        >
-          <motion.span
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            🚀 Full-Stack Mobile & Web Developer
-          </motion.span>
-        </motion.p>
-
-        <motion.div
-          style={styles.tags}
-          variants={{
-            hidden: { y: 20, opacity: 0 },
-            visible: { y: 0, opacity: 1, transition: { delay: 0.5 } },
-          }}
-        >
-          {["Flutter", "Kotlin", "Java", "React", "Node.js", "Python"].map(
-            (tag, i) => (
-              <motion.span
-                key={tag}
-                style={styles.tag}
-                whileHover={{ scale: 1.1, rotate: Math.random() * 10 - 5 }}
+            {/* Hero Section */}
+            <section style={styles.hero}>
+              {/* Animated logo */}
+              <motion.div
+                style={styles.logoContainer}
                 animate={{
-                  y: [0, -5, 0],
-                }}
-                transition={{
-                  y: { duration: 2, repeat: Infinity, delay: i * 0.2 },
-                }}
-              >
-                {tag}
-              </motion.span>
-            ),
-          )}
-        </motion.div>
-
-        <motion.div
-          style={styles.scrollIndicator}
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <span>Scroll Down</span>
-          <motion.div style={styles.scrollArrow} animate={{ rotate: -45 }}>
-            ↓
-          </motion.div>
-        </motion.div>
-      </motion.section>
-
-      {/* Skills Section */}
-      <section style={styles.section}>
-        <motion.h2
-          style={styles.sectionTitle}
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.8 }}
-        >
-          🛠️ Tech Stack
-        </motion.h2>
-
-        {Object.entries(skills).map(([category, skillList], categoryIndex) => (
-          <motion.div
-            key={category}
-            style={styles.skillCategory}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{ delay: categoryIndex * 0.2 }}
-          >
-            <h3 style={styles.categoryTitle}>
-              {category === "mobile" && "📱 Mobile Development"}
-              {category === "web" && "🌐 Web Development"}
-              {category === "database" && "🗄️ Databases"}
-            </h3>
-            <div style={styles.skillGrid}>
-              {skillList.map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  style={{ ...styles.skillCard, borderColor: skill.color }}
-                  whileHover={{
-                    scale: 1.15,
-                    rotate: Math.random() * 10 - 5,
-                    boxShadow: `0 0 30px ${skill.shadow}`,
-                  }}
-                  animate={{
-                    y: [0, -10, 0],
-                  }}
-                  transition={{
-                    y: { duration: 2, repeat: Infinity, delay: index * 0.1 },
-                  }}
-                >
-                  <motion.span
-                    style={{ ...styles.skillIcon, color: skill.color }}
-                    animate={{ rotate: [0, 360] }}
-                    transition={{
-                      duration: 10,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  >
-                    {skill.icon}
-                  </motion.span>
-                  <span style={styles.skillName}>{skill.name}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </section>
-
-      {/* Projects Section */}
-      <section style={styles.section}>
-        <motion.h2
-          style={styles.sectionTitle}
-          initial={{ opacity: 0, scale: 0.5 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.8 }}
-        >
-          🏆 Featured Projects
-        </motion.h2>
-        <div style={styles.projectGrid}>
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              style={{ ...styles.projectCard, background: project.gradient }}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false }}
-              transition={{ delay: index * 0.2 }}
-              whileHover={{
-                scale: 1.08,
-                rotate: 2,
-                boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
-              }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <motion.h3
-                style={styles.projectTitle}
-                whileHover={{ scale: 1.05 }}
-              >
-                {project.title}
-              </motion.h3>
-              <p style={styles.projectDesc}>{project.description}</p>
-              <div style={styles.projectTags}>
-                {project.tech.map((t, i) => (
-                  <motion.span
-                    key={t}
-                    style={styles.projectTag}
-                    whileHover={{ scale: 1.2, rotate: 5 }}
-                    animate={{
-                      scale: [1, 1.1, 1],
-                    }}
-                    transition={{
-                      scale: { duration: 2, repeat: Infinity, delay: i * 0.3 },
-                    }}
-                  >
-                    {t}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section style={styles.section}>
-        <motion.div
-          style={styles.statsContainer}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-        >
-          {[
-            { number: "50+", label: "Projects", icon: <FaCode /> },
-            { number: "500+", label: "Commits", icon: <FaGithub /> },
-            { number: "20+", label: "Skills", icon: <FaRocket /> },
-            { number: "100%", label: "Passion", icon: <FaHeart /> },
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              style={styles.stat}
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: false }}
-              transition={{ delay: index * 0.1, type: "spring" }}
-              whileHover={{ scale: 1.1 }}
-            >
-              <motion.span
-                style={styles.statIcon}
-                animate={{
-                  scale: [1, 1.3, 1],
-                  rotate: [0, 15, -15, 0],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: index * 0.2,
-                }}
-              >
-                {stat.icon}
-              </motion.span>
-              <motion.span
-                style={styles.statNumber}
-                animate={{
+                  rotate: 360,
                   scale: [1, 1.1, 1],
                 }}
                 transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: index * 0.3,
+                  rotate: { duration: 15, repeat: Infinity, ease: "linear" },
+                  scale: { duration: 3, repeat: Infinity },
                 }}
               >
-                {stat.number}
-              </motion.span>
-              <span style={styles.statLabel}>{stat.label}</span>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
+                <motion.div
+                  style={styles.logoGlow}
+                  animate={{
+                    boxShadow: [
+                      "0 0 30px rgba(102, 126, 234, 0.6)",
+                      "0 0 60px rgba(240, 147, 251, 0.8)",
+                      "0 0 90px rgba(102, 126, 234, 0.6)",
+                    ],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+                <div style={styles.logo}>AA</div>
+              </motion.div>
 
-      {/* Contact Section */}
-      <section style={styles.section}>
-        <motion.h2
-          style={styles.sectionTitle}
-          initial={{ opacity: 0, y: -50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-        >
-          📬 Connect With Me
-        </motion.h2>
-        <div style={styles.socialLinks}>
-          {[
-            {
-              icon: <FaGithub />,
-              label: "GitHub",
-              color: "#ffffff",
-              href: "https://github.com/iamacat02",
-            },
-            {
-              icon: <FaLinkedin />,
-              label: "LinkedIn",
-              color: "#0077B5",
-              href: "https://linkedin.com/in/iamacat02",
-            },
-            {
-              icon: <FaTwitter />,
-              label: "Twitter",
-              color: "#1DA1F2",
-              href: "https://twitter.com/iamacat02",
-            },
-            {
-              icon: <FaEnvelope />,
-              label: "Email",
-              color: "#EA4335",
-              href: "mailto:iamacat02@email.com",
-            },
-          ].map((social, index) => (
-            <motion.a
-              key={social.label}
-              href={social.href}
-              style={{ ...styles.socialLink, color: social.color }}
-              whileHover={{
-                scale: 1.4,
-                rotate: 10,
-                boxShadow: `0 0 30px ${social.color}80`,
-              }}
-              whileTap={{ scale: 0.9 }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false }}
-              transition={{ delay: index * 0.1 }}
-            >
-              {social.icon}
-            </motion.a>
-          ))}
-        </div>
-      </section>
+              {/* Name with continuous glow */}
+              <motion.h1
+                style={styles.name}
+                animate={{
+                  textShadow: [
+                    "0 0 20px rgba(102, 126, 234, 0.8)",
+                    "0 0 40px rgba(240, 147, 251, 1)",
+                    "0 0 60px rgba(245, 87, 108, 0.8)",
+                    "0 0 40px rgba(102, 126, 234, 0.8)",
+                  ],
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
+              >
+                Ar Asiful Islam
+              </motion.h1>
 
-      {/* Footer */}
-      <motion.footer
-        style={styles.footer}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: false }}
-      >
-        <motion.div whileHover={{ scale: 1.05 }}>
-          <p style={styles.starText}>⭐ Star this repo if you like it!</p>
-        </motion.div>
-        <motion.p
-          style={styles.copyright}
-          animate={{
-            opacity: [0.5, 1, 0.5],
-          }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          © 2026 Ar Asiful Islam. Built with React &{" "}
-          <FaHeart style={{ color: "#ff6b6b" }} />
-        </motion.p>
-      </motion.footer>
+              {/* Animated title */}
+              <motion.p
+                style={styles.title}
+                animate={{ opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                🚀 Full-Stack Mobile & Web Developer
+              </motion.p>
+
+              {/* Always bouncing tags */}
+              <div style={styles.tags}>
+                {[
+                  "Flutter",
+                  "Kotlin",
+                  "Java",
+                  "React",
+                  "Node.js",
+                  "Python",
+                ].map((tag, i) => (
+                  <motion.span
+                    key={tag}
+                    style={styles.tag}
+                    animate={{
+                      y: [0, -8, 0],
+                      scale: [1, 1.05, 1],
+                    }}
+                    transition={{
+                      y: { duration: 1.5, repeat: Infinity, delay: i * 0.15 },
+                      scale: {
+                        duration: 1.5,
+                        repeat: Infinity,
+                        delay: i * 0.15,
+                      },
+                    }}
+                    whileHover={{ scale: 1.15, rotate: Math.random() * 6 - 3 }}
+                  >
+                    {tag}
+                  </motion.span>
+                ))}
+              </div>
+
+              {/* Scrolling indicator */}
+              <motion.div
+                style={styles.scrollIndicator}
+                animate={{ y: [0, 12, 0], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <span>↓</span>
+              </motion.div>
+            </section>
+
+            {/* Skills Section */}
+            <section style={styles.section}>
+              <motion.h2
+                style={styles.sectionTitle}
+                animate={{
+                  textShadow: [
+                    "0 0 10px rgba(102, 126, 234, 0.5)",
+                    "0 0 20px rgba(240, 147, 251, 0.8)",
+                    "0 0 10px rgba(102, 126, 234, 0.5)",
+                  ],
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                🛠️ Tech Stack
+              </motion.h2>
+
+              {Object.entries(skills).map(
+                ([category, skillList], categoryIndex) => (
+                  <motion.div key={category} style={styles.skillCategory}>
+                    <h3 style={styles.categoryTitle}>
+                      {category === "mobile" && "📱 Mobile Development"}
+                      {category === "web" && "🌐 Web Development"}
+                      {category === "database" && "🗄️ Databases"}
+                    </h3>
+                    <div style={styles.skillGrid}>
+                      {skillList.map((skill, index) => (
+                        <motion.div
+                          key={skill.name}
+                          style={{
+                            ...styles.skillCard,
+                            borderColor: skill.color,
+                          }}
+                          animate={{
+                            y: [0, -12, 0],
+                            rotate: [0, 3, -3, 0],
+                          }}
+                          transition={{
+                            y: {
+                              duration: 2 + index * 0.2,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            },
+                            rotate: {
+                              duration: 4 + index * 0.3,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            },
+                          }}
+                          whileHover={{
+                            scale: 1.2,
+                            boxShadow: `0 0 40px ${skill.shadow}`,
+                            rotate: 0,
+                          }}
+                        >
+                          <motion.span
+                            style={{ ...styles.skillIcon, color: skill.color }}
+                            animate={{ rotate: 360 }}
+                            transition={{
+                              duration: 8,
+                              repeat: Infinity,
+                              ease: "linear",
+                            }}
+                          >
+                            {skill.icon}
+                          </motion.span>
+                          <span style={styles.skillName}>{skill.name}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                ),
+              )}
+            </section>
+
+            {/* Projects Section */}
+            <section style={styles.section}>
+              <motion.h2
+                style={styles.sectionTitle}
+                animate={{
+                  scale: [1, 1.05, 1],
+                  textShadow: [
+                    "0 0 10px rgba(102, 126, 234, 0.5)",
+                    "0 0 25px rgba(240, 147, 251, 0.9)",
+                    "0 0 10px rgba(102, 126, 234, 0.5)",
+                  ],
+                }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+              >
+                🏆 Featured Projects
+              </motion.h2>
+              <div style={styles.projectGrid}>
+                {projects.map((project, index) => (
+                  <motion.div
+                    key={project.title}
+                    style={{
+                      ...styles.projectCard,
+                      background: project.gradient,
+                    }}
+                    animate={{
+                      y: [0, -15, 0],
+                      rotate: [0, 1, -1, 0],
+                    }}
+                    transition={{
+                      y: {
+                        duration: 3 + index * 0.3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      },
+                      rotate: {
+                        duration: 5 + index * 0.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      },
+                    }}
+                    whileHover={{
+                      scale: 1.1,
+                      rotate: 0,
+                      boxShadow: "0 25px 80px rgba(0,0,0,0.5)",
+                    }}
+                  >
+                    <h3 style={styles.projectTitle}>{project.title}</h3>
+                    <p style={styles.projectDesc}>{project.description}</p>
+                    <div style={styles.projectTags}>
+                      {project.tech.map((t, i) => (
+                        <motion.span
+                          key={t}
+                          style={styles.projectTag}
+                          animate={{
+                            scale: [1, 1.15, 1],
+                          }}
+                          transition={{
+                            scale: {
+                              duration: 1.5,
+                              repeat: Infinity,
+                              delay: i * 0.2,
+                            },
+                          }}
+                        >
+                          {t}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            {/* Stats Section */}
+            <section style={styles.section}>
+              <div style={styles.statsContainer}>
+                {[
+                  {
+                    number: "50+",
+                    label: "Projects",
+                    icon: <FaCode />,
+                    color: "#667eea",
+                  },
+                  {
+                    number: "500+",
+                    label: "Commits",
+                    icon: <FaGithub />,
+                    color: "#f093fb",
+                  },
+                  {
+                    number: "20+",
+                    label: "Skills",
+                    icon: <FaBolt />,
+                    color: "#f5576c",
+                  },
+                  {
+                    number: "100%",
+                    label: "Passion",
+                    icon: <FaHeart />,
+                    color: "#ff6b6b",
+                  },
+                ].map((stat, index) => (
+                  <motion.div
+                    key={stat.label}
+                    style={styles.stat}
+                    animate={{
+                      y: [0, -20, 0],
+                      scale: [1, 1.1, 1],
+                    }}
+                    transition={{
+                      y: {
+                        duration: 2 + index * 0.2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      },
+                      scale: {
+                        duration: 2 + index * 0.2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      },
+                    }}
+                    whileHover={{ scale: 1.15 }}
+                  >
+                    <motion.span
+                      style={{ ...styles.statIcon, color: stat.color }}
+                      animate={{
+                        rotate: [0, 20, -20, 0],
+                        scale: [1, 1.3, 1],
+                      }}
+                      transition={{
+                        rotate: {
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: index * 0.2,
+                        },
+                        scale: {
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: index * 0.2,
+                        },
+                      }}
+                    >
+                      {stat.icon}
+                    </motion.span>
+                    <motion.span
+                      style={styles.statNumber}
+                      animate={{
+                        textShadow: [
+                          "0 0 10px rgba(102, 126, 234, 0.5)",
+                          "0 0 20px rgba(240, 147, 251, 0.8)",
+                          "0 0 10px rgba(102, 126, 234, 0.5)",
+                        ],
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      {stat.number}
+                    </motion.span>
+                    <span style={styles.statLabel}>{stat.label}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            {/* Contact Section */}
+            <section style={styles.section}>
+              <motion.h2
+                style={styles.sectionTitle}
+                animate={{
+                  textShadow: [
+                    "0 0 10px rgba(102, 126, 234, 0.5)",
+                    "0 0 25px rgba(240, 147, 251, 0.9)",
+                    "0 0 10px rgba(102, 126, 234, 0.5)",
+                  ],
+                }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+              >
+                📬 Connect With Me
+              </motion.h2>
+              <div style={styles.socialLinks}>
+                {[
+                  {
+                    icon: <FaGithub />,
+                    color: "#ffffff",
+                    href: "https://github.com/iamacat02",
+                  },
+                  {
+                    icon: <FaLinkedin />,
+                    color: "#0077B5",
+                    href: "https://linkedin.com/in/iamacat02",
+                  },
+                  {
+                    icon: <FaTwitter />,
+                    color: "#1DA1F2",
+                    href: "https://twitter.com/iamacat02",
+                  },
+                  {
+                    icon: <FaEnvelope />,
+                    color: "#EA4335",
+                    href: "mailto:iamacat02@email.com",
+                  },
+                ].map((social, index) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    style={{ ...styles.socialLink, color: social.color }}
+                    animate={{
+                      y: [0, -10, 0],
+                      scale: [1, 1.15, 1],
+                    }}
+                    transition={{
+                      y: {
+                        duration: 1.5 + index * 0.2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      },
+                      scale: {
+                        duration: 1.5 + index * 0.2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      },
+                    }}
+                    whileHover={{
+                      scale: 1.5,
+                      rotate: 15,
+                      boxShadow: `0 0 40px ${social.color}90`,
+                    }}
+                  >
+                    {social.icon}
+                  </motion.a>
+                ))}
+              </div>
+            </section>
+
+            {/* Footer */}
+            <footer style={styles.footer}>
+              <motion.p
+                style={styles.starText}
+                animate={{
+                  scale: [1, 1.1, 1],
+                  textShadow: [
+                    "0 0 5px rgba(255, 215, 0, 0.5)",
+                    "0 0 15px rgba(255, 215, 0, 0.9)",
+                    "0 0 5px rgba(255, 215, 0, 0.5)",
+                  ],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                ⭐ Star this repo if you like it!
+              </motion.p>
+              <motion.p
+                style={styles.copyright}
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                © 2026 Ar Asiful Islam • Built with React &{" "}
+                <FaHeart style={{ color: "#ff6b6b", marginLeft: 4 }} />
+              </motion.p>
+            </footer>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -575,7 +668,7 @@ const styles = {
   container: {
     minHeight: "100vh",
     background:
-      "linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%)",
+      "linear-gradient(135deg, #0d1117 0%, #0a0e14 50%, #0d1117 100%)",
     color: "#ffffff",
     position: "relative",
     overflow: "hidden",
@@ -588,32 +681,36 @@ const styles = {
     bottom: 0,
     pointerEvents: "none",
     zIndex: 0,
+  },
+  orb: {
+    position: "absolute",
+    width: "clamp(150px, 20vw, 300px)",
+    height: "clamp(150px, 20vw, 300px)",
+    borderRadius: "50%",
+  },
+  gridBackground: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     overflow: "hidden",
+  },
+  gridLine: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    width: "1px",
+    background: "linear-gradient(to bottom, transparent, #667eea, transparent)",
   },
   particle: {
     position: "absolute",
     background: "linear-gradient(135deg, #667eea, #f093fb)",
     borderRadius: "50%",
   },
-  floatingShape1: {
-    position: "absolute",
-    top: "10%",
-    left: "5%",
-    width: "300px",
-    height: "300px",
-    background:
-      "radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%)",
-    borderRadius: "50%",
-  },
-  floatingShape2: {
-    position: "absolute",
-    bottom: "20%",
-    right: "10%",
-    width: "200px",
-    height: "200px",
-    background:
-      "radial-gradient(circle, rgba(240, 147, 251, 0.15) 0%, transparent 70%)",
-    borderRadius: "50%",
+  content: {
+    position: "relative",
+    zIndex: 1,
   },
   hero: {
     minHeight: "100vh",
@@ -622,23 +719,21 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     padding: "40px 20px",
-    position: "relative",
-    zIndex: 1,
   },
-  avatarContainer: {
+  logoContainer: {
     position: "relative",
-    marginBottom: "30px",
+    marginBottom: "35px",
   },
-  avatarGlow: {
+  logoGlow: {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "140px",
-    height: "140px",
+    width: "150px",
+    height: "150px",
     borderRadius: "50%",
   },
-  avatar: {
+  logo: {
     width: "120px",
     height: "120px",
     borderRadius: "50%",
@@ -647,18 +742,15 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    fontSize: "42px",
+    fontWeight: "bold",
     position: "relative",
     zIndex: 1,
   },
-  avatarText: {
-    fontSize: "42px",
-    fontWeight: "bold",
-    color: "#ffffff",
-  },
   name: {
-    fontSize: "clamp(36px, 8vw, 64px)",
+    fontSize: "clamp(38px, 9vw, 72px)",
     fontWeight: "900",
-    marginBottom: "15px",
+    marginBottom: "18px",
     background:
       "linear-gradient(135deg, #667eea 0%, #f093fb 50%, #f5576c 100%)",
     WebkitBackgroundClip: "text",
@@ -666,68 +758,57 @@ const styles = {
     backgroundClip: "text",
   },
   title: {
-    fontSize: "clamp(18px, 4vw, 24px)",
+    fontSize: "clamp(18px, 4vw, 26px)",
     color: "#8b949e",
-    marginBottom: "25px",
+    marginBottom: "30px",
   },
   tags: {
     display: "flex",
-    gap: "12px",
+    gap: "14px",
     flexWrap: "wrap",
     justifyContent: "center",
-    marginBottom: "40px",
+    marginBottom: "50px",
   },
   tag: {
-    padding: "10px 20px",
+    padding: "12px 24px",
     background: "rgba(102, 126, 234, 0.15)",
-    borderRadius: "25px",
-    fontSize: "14px",
-    fontWeight: "500",
+    borderRadius: "30px",
+    fontSize: "15px",
+    fontWeight: "600",
     color: "#c9d1d9",
     border: "1px solid rgba(102, 126, 234, 0.3)",
     cursor: "pointer",
   },
   scrollIndicator: {
-    position: "absolute",
-    bottom: "30px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "10px",
-    color: "#8b949e",
-    fontSize: "14px",
-  },
-  scrollArrow: {
-    fontSize: "20px",
+    fontSize: "32px",
+    color: "#667eea",
   },
   section: {
-    padding: "80px 20px",
+    padding: "90px 20px",
     maxWidth: "1200px",
     margin: "0 auto",
-    position: "relative",
-    zIndex: 1,
   },
   sectionTitle: {
-    fontSize: "clamp(28px, 5vw, 40px)",
+    fontSize: "clamp(30px, 6vw, 46px)",
     fontWeight: "800",
-    marginBottom: "40px",
+    marginBottom: "45px",
     textAlign: "center",
     background: "linear-gradient(135deg, #667eea 0%, #f093fb 100%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
   },
   skillCategory: {
-    marginBottom: "40px",
+    marginBottom: "45px",
   },
   categoryTitle: {
-    fontSize: "20px",
+    fontSize: "22px",
     color: "#8b949e",
-    marginBottom: "20px",
+    marginBottom: "22px",
     textAlign: "center",
   },
   skillGrid: {
     display: "flex",
-    gap: "20px",
+    gap: "22px",
     flexWrap: "wrap",
     justifyContent: "center",
   },
@@ -736,63 +817,60 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: "25px 35px",
-    background: "rgba(22, 27, 34, 0.9)",
-    borderRadius: "20px",
+    padding: "28px 38px",
+    background: "rgba(22, 27, 34, 0.85)",
+    borderRadius: "22px",
     border: "2px solid",
-    minWidth: "130px",
+    minWidth: "140px",
     cursor: "pointer",
-    transition: "all 0.3s ease",
   },
   skillIcon: {
-    fontSize: "36px",
-    marginBottom: "10px",
+    fontSize: "40px",
+    marginBottom: "12px",
   },
   skillName: {
-    fontSize: "15px",
+    fontSize: "16px",
     fontWeight: "600",
     color: "#c9d1d9",
   },
   projectGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "30px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
+    gap: "32px",
   },
   projectCard: {
-    padding: "35px",
-    borderRadius: "24px",
+    padding: "38px",
+    borderRadius: "26px",
     cursor: "pointer",
-    transition: "all 0.3s ease",
   },
   projectTitle: {
-    fontSize: "24px",
+    fontSize: "26px",
     fontWeight: "700",
-    marginBottom: "12px",
+    marginBottom: "14px",
     color: "#ffffff",
   },
   projectDesc: {
-    fontSize: "15px",
+    fontSize: "16px",
     color: "rgba(255, 255, 255, 0.85)",
-    marginBottom: "18px",
+    marginBottom: "20px",
   },
   projectTags: {
     display: "flex",
-    gap: "10px",
+    gap: "12px",
     flexWrap: "wrap",
   },
   projectTag: {
-    padding: "6px 14px",
+    padding: "7px 16px",
     background: "rgba(255, 255, 255, 0.25)",
-    borderRadius: "15px",
-    fontSize: "13px",
+    borderRadius: "18px",
+    fontSize: "14px",
     fontWeight: "500",
     color: "#ffffff",
-    cursor: "pointer",
   },
   statsContainer: {
     display: "flex",
     justifyContent: "center",
-    gap: "clamp(30px, 8vw, 80px)",
+    gap: "clamp(35px, 10vw, 90px)",
     flexWrap: "wrap",
   },
   stat: {
@@ -801,49 +879,45 @@ const styles = {
   },
   statIcon: {
     display: "block",
-    fontSize: "32px",
-    marginBottom: "10px",
-    color: "#667eea",
+    fontSize: "36px",
+    marginBottom: "12px",
   },
   statNumber: {
     display: "block",
-    fontSize: "clamp(36px, 6vw, 56px)",
+    fontSize: "clamp(40px, 7vw, 62px)",
     fontWeight: "900",
     background: "linear-gradient(135deg, #667eea 0%, #f093fb 100%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
   },
   statLabel: {
-    fontSize: "16px",
+    fontSize: "17px",
     color: "#8b949e",
     fontWeight: "500",
   },
   socialLinks: {
     display: "flex",
     justifyContent: "center",
-    gap: "clamp(25px, 6vw, 50px)",
+    gap: "clamp(30px, 8vw, 60px)",
   },
   socialLink: {
-    fontSize: "clamp(32px, 6vw, 44px)",
-    transition: "all 0.3s ease",
+    fontSize: "clamp(36px, 7vw, 50px)",
     cursor: "pointer",
   },
   footer: {
     textAlign: "center",
-    padding: "50px 20px",
+    padding: "55px 20px",
     color: "#8b949e",
-    position: "relative",
-    zIndex: 1,
-    background: "rgba(0,0,0,0.2)",
+    background: "rgba(0,0,0,0.25)",
   },
   starText: {
-    fontSize: "18px",
+    fontSize: "20px",
     fontWeight: "600",
-    marginBottom: "15px",
+    marginBottom: "18px",
     cursor: "pointer",
   },
   copyright: {
-    fontSize: "14px",
+    fontSize: "15px",
   },
 };
 
