@@ -22,9 +22,9 @@
 
 <div align="center">
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=iamacat02&show_icons=true&theme=tokyonight&hide_border=true)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=iamacat02&layout=compact&theme=tokyonight&hide_border=true)
-![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=iamacat02&theme=tokyonight&hide_border=true)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=iamacat02&show_icons=true&theme=dark&hide_border=true)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=iamacat02&layout=compact&theme=dark&hide_border=true)
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=iamacat02&theme=dark&hide_border=true)
 
 </div>
 
@@ -46,8 +46,11 @@
 
 ## 📈 Activity Graph
 
-> [!TIP]
-> **Weekly Activity**: High engagement in Commits (85%) and consistent PR reviews (60%). Focused on maintaining quality and architectural integrity.
+<div align="center">
+
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=iamacat02&theme=github-dark&hide_border=true)
+
+</div>
 
 ---
 
