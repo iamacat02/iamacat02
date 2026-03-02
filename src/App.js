@@ -3,6 +3,7 @@ import {
   motion,
   useScroll,
   useTransform,
+  useSpring,
   AnimatePresence,
 } from "framer-motion";
 import {
@@ -130,6 +131,12 @@ const projects = [
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     setIsLoaded(true);
@@ -145,6 +152,9 @@ function App() {
 
   return (
     <div style={styles.container}>
+      {/* Scroll Progress Bar */}
+      <motion.div style={{ ...styles.progressBar, scaleX }} />
+
       {/* Always Animated Background */}
       <div style={styles.background}>
         {/* Floating orbs */}
@@ -226,50 +236,63 @@ function App() {
         {isLoaded && (
           <motion.div
             style={{ ...styles.content, y: mousePosition.y * 0.3 }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.2 } },
+            }}
           >
             {/* Hero Section */}
             <section style={styles.hero}>
               {/* Animated logo */}
               <motion.div
                 style={styles.logoContainer}
-                animate={{
-                  rotate: 360,
-                  scale: [1, 1.1, 1],
-                }}
-                transition={{
-                  rotate: { duration: 15, repeat: Infinity, ease: "linear" },
-                  scale: { duration: 3, repeat: Infinity },
+                variants={{
+                  hidden: { opacity: 0, scale: 0.5, rotate: -180 },
+                  visible: {
+                    opacity: 1,
+                    scale: 1,
+                    rotate: 0,
+                    transition: { type: "spring", damping: 12, stiffness: 100 },
+                  },
                 }}
               >
                 <motion.div
                   style={styles.logoGlow}
                   animate={{
                     boxShadow: [
-                      "0 0 30px rgba(102, 126, 234, 0.6)",
-                      "0 0 60px rgba(240, 147, 251, 0.8)",
-                      "0 0 90px rgba(102, 126, 234, 0.6)",
+                      "0 0 30px rgba(102, 126, 234, 0.4)",
+                      "0 0 60px rgba(240, 147, 251, 0.6)",
+                      "0 0 30px rgba(102, 126, 234, 0.4)",
                     ],
                   }}
-                  transition={{ duration: 3, repeat: Infinity }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                 />
-                <div style={styles.logo}>AA</div>
+                <motion.div
+                  style={styles.logo}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                >
+                  AA
+                </motion.div>
               </motion.div>
 
               {/* Name with continuous glow */}
               <motion.h1
                 style={styles.name}
-                animate={{
-                  textShadow: [
-                    "0 0 20px rgba(102, 126, 234, 0.8)",
-                    "0 0 40px rgba(240, 147, 251, 1)",
-                    "0 0 60px rgba(245, 87, 108, 0.8)",
-                    "0 0 40px rgba(102, 126, 234, 0.8)",
-                  ],
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.8, ease: "easeOut" },
+                  },
                 }}
-                transition={{ duration: 4, repeat: Infinity }}
+                whileHover={{ scale: 1.02 }}
               >
                 Ar Asiful Islam
               </motion.h1>
@@ -277,14 +300,29 @@ function App() {
               {/* Animated title */}
               <motion.p
                 style={styles.title}
-                animate={{ opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.8, ease: "easeOut" },
+                  },
+                }}
               >
                 🚀 Full-Stack Mobile & Web Developer
               </motion.p>
 
               {/* Always bouncing tags */}
-              <div style={styles.tags}>
+              <motion.div
+                style={styles.tags}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.1, delayChildren: 0.5 },
+                  },
+                }}
+              >
                 {[
                   "Flutter",
                   "Kotlin",
@@ -296,24 +334,23 @@ function App() {
                   <motion.span
                     key={tag}
                     style={styles.tag}
-                    animate={{
-                      y: [0, -8, 0],
-                      scale: [1, 1.05, 1],
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.8, y: 20 },
+                      visible: { opacity: 1, scale: 1, y: 0 },
                     }}
-                    transition={{
-                      y: { duration: 1.5, repeat: Infinity, delay: i * 0.15 },
-                      scale: {
-                        duration: 1.5,
-                        repeat: Infinity,
-                        delay: i * 0.15,
-                      },
+                    whileHover={{
+                      scale: 1.1,
+                      y: -5,
+                      backgroundColor: "rgba(102, 126, 234, 0.25)",
+                      borderColor: "rgba(102, 126, 234, 0.6)",
+                      transition: { duration: 0.2 },
                     }}
-                    whileHover={{ scale: 1.15, rotate: Math.random() * 6 - 3 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     {tag}
                   </motion.span>
                 ))}
-              </div>
+              </motion.div>
 
               {/* Scrolling indicator */}
               <motion.div
@@ -326,17 +363,23 @@ function App() {
             </section>
 
             {/* Skills Section */}
-            <section style={styles.section}>
+            <motion.section
+              style={styles.section}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
               <motion.h2
                 style={styles.sectionTitle}
                 animate={{
                   textShadow: [
-                    "0 0 10px rgba(102, 126, 234, 0.5)",
-                    "0 0 20px rgba(240, 147, 251, 0.8)",
-                    "0 0 10px rgba(102, 126, 234, 0.5)",
+                    "0 0 10px rgba(102, 126, 234, 0.3)",
+                    "0 0 20px rgba(240, 147, 251, 0.5)",
+                    "0 0 10px rgba(102, 126, 234, 0.3)",
                   ],
                 }}
-                transition={{ duration: 3, repeat: Infinity }}
+                transition={{ duration: 4, repeat: Infinity }}
               >
                 🛠️ Tech Stack
               </motion.h2>
@@ -349,7 +392,19 @@ function App() {
                       {category === "web" && "🌐 Web Development"}
                       {category === "database" && "🗄️ Databases"}
                     </h3>
-                    <div style={styles.skillGrid}>
+                    <motion.div
+                      style={styles.skillGrid}
+                      variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                          opacity: 1,
+                          transition: { staggerChildren: 0.1 },
+                        },
+                      }}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                    >
                       {skillList.map((skill, index) => (
                         <motion.div
                           key={skill.name}
@@ -357,33 +412,26 @@ function App() {
                             ...styles.skillCard,
                             borderColor: skill.color,
                           }}
-                          animate={{
-                            y: [0, -12, 0],
-                            rotate: [0, 3, -3, 0],
-                          }}
-                          transition={{
-                            y: {
-                              duration: 2 + index * 0.2,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                            },
-                            rotate: {
-                              duration: 4 + index * 0.3,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                            },
+                          variants={{
+                            hidden: { opacity: 0, y: 20, scale: 0.9 },
+                            visible: { opacity: 1, y: 0, scale: 1 },
                           }}
                           whileHover={{
-                            scale: 1.2,
-                            boxShadow: `0 0 40px ${skill.shadow}`,
-                            rotate: 0,
+                            scale: 1.1,
+                            y: -10,
+                            boxShadow: `0 15px 35px ${skill.shadow}`,
+                            transition: {
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 10,
+                            },
                           }}
                         >
                           <motion.span
                             style={{ ...styles.skillIcon, color: skill.color }}
                             animate={{ rotate: 360 }}
                             transition={{
-                              duration: 8,
+                              duration: 15,
                               repeat: Infinity,
                               ease: "linear",
                             }}
@@ -393,29 +441,42 @@ function App() {
                           <span style={styles.skillName}>{skill.name}</span>
                         </motion.div>
                       ))}
-                    </div>
+                    </motion.div>
                   </motion.div>
                 ),
               )}
-            </section>
+            </motion.section>
 
             {/* Projects Section */}
-            <section style={styles.section}>
+            <motion.section
+              style={styles.section}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
               <motion.h2
                 style={styles.sectionTitle}
                 animate={{
-                  scale: [1, 1.05, 1],
-                  textShadow: [
-                    "0 0 10px rgba(102, 126, 234, 0.5)",
-                    "0 0 25px rgba(240, 147, 251, 0.9)",
-                    "0 0 10px rgba(102, 126, 234, 0.5)",
-                  ],
+                  scale: [1, 1.02, 1],
                 }}
-                transition={{ duration: 2.5, repeat: Infinity }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
                 🏆 Featured Projects
               </motion.h2>
-              <div style={styles.projectGrid}>
+              <motion.div
+                style={styles.projectGrid}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.2 },
+                  },
+                }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
                 {projects.map((project, index) => (
                   <motion.div
                     key={project.title}
@@ -423,26 +484,15 @@ function App() {
                       ...styles.projectCard,
                       background: project.gradient,
                     }}
-                    animate={{
-                      y: [0, -15, 0],
-                      rotate: [0, 1, -1, 0],
-                    }}
-                    transition={{
-                      y: {
-                        duration: 3 + index * 0.3,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      },
-                      rotate: {
-                        duration: 5 + index * 0.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      },
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.95, y: 30 },
+                      visible: { opacity: 1, scale: 1, y: 0 },
                     }}
                     whileHover={{
-                      scale: 1.1,
-                      rotate: 0,
-                      boxShadow: "0 25px 80px rgba(0,0,0,0.5)",
+                      y: -15,
+                      scale: 1.02,
+                      boxShadow: "0 30px 60px rgba(0,0,0,0.4)",
+                      transition: { duration: 0.3, ease: "easeOut" },
                     }}
                   >
                     <h3 style={styles.projectTitle}>{project.title}</h3>
@@ -452,16 +502,7 @@ function App() {
                         <motion.span
                           key={t}
                           style={styles.projectTag}
-                          animate={{
-                            scale: [1, 1.15, 1],
-                          }}
-                          transition={{
-                            scale: {
-                              duration: 1.5,
-                              repeat: Infinity,
-                              delay: i * 0.2,
-                            },
-                          }}
+                          whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.4)" }}
                         >
                           {t}
                         </motion.span>
@@ -469,12 +510,30 @@ function App() {
                     </div>
                   </motion.div>
                 ))}
-              </div>
-            </section>
+              </motion.div>
+            </motion.section>
 
             {/* Stats Section */}
-            <section style={styles.section}>
-              <div style={styles.statsContainer}>
+            <motion.section
+              style={styles.section}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.div
+                style={styles.statsContainer}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.15 },
+                  },
+                }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
                 {[
                   {
                     number: "50+",
@@ -504,23 +563,11 @@ function App() {
                   <motion.div
                     key={stat.label}
                     style={styles.stat}
-                    animate={{
-                      y: [0, -20, 0],
-                      scale: [1, 1.1, 1],
+                    variants={{
+                      hidden: { opacity: 0, y: 30 },
+                      visible: { opacity: 1, y: 0 },
                     }}
-                    transition={{
-                      y: {
-                        duration: 2 + index * 0.2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      },
-                      scale: {
-                        duration: 2 + index * 0.2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      },
-                    }}
-                    whileHover={{ scale: 1.15 }}
+                    whileHover={{ scale: 1.1, transition: { type: "spring", stiffness: 300 } }}
                   >
                     <motion.span
                       style={{ ...styles.statIcon, color: stat.color }}
@@ -563,21 +610,39 @@ function App() {
             </section>
 
             {/* Contact Section */}
-            <section style={styles.section}>
+            <motion.section
+              style={styles.section}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
               <motion.h2
                 style={styles.sectionTitle}
                 animate={{
                   textShadow: [
-                    "0 0 10px rgba(102, 126, 234, 0.5)",
-                    "0 0 25px rgba(240, 147, 251, 0.9)",
-                    "0 0 10px rgba(102, 126, 234, 0.5)",
+                    "0 0 10px rgba(102, 126, 234, 0.3)",
+                    "0 0 25px rgba(240, 147, 251, 0.6)",
+                    "0 0 10px rgba(102, 126, 234, 0.3)",
                   ],
                 }}
-                transition={{ duration: 2.5, repeat: Infinity }}
+                transition={{ duration: 3, repeat: Infinity }}
               >
                 📬 Connect With Me
               </motion.h2>
-              <div style={styles.socialLinks}>
+              <motion.div
+                style={styles.socialLinks}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.1 },
+                  },
+                }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
                 {[
                   {
                     icon: <FaGithub />,
@@ -604,59 +669,50 @@ function App() {
                     key={social.label}
                     href={social.href}
                     style={{ ...styles.socialLink, color: social.color }}
-                    animate={{
-                      y: [0, -10, 0],
-                      scale: [1, 1.15, 1],
-                    }}
-                    transition={{
-                      y: {
-                        duration: 1.5 + index * 0.2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      },
-                      scale: {
-                        duration: 1.5 + index * 0.2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      },
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.5 },
+                      visible: { opacity: 1, scale: 1 },
                     }}
                     whileHover={{
-                      scale: 1.5,
+                      scale: 1.3,
                       rotate: 15,
-                      boxShadow: `0 0 40px ${social.color}90`,
+                      boxShadow: `0 0 40px ${social.color}60`,
+                      transition: { type: "spring", stiffness: 400, damping: 10 },
                     }}
+                    whileTap={{ scale: 0.9 }}
                   >
                     {social.icon}
                   </motion.a>
                 ))}
-              </div>
-            </section>
+              </motion.div>
+            </motion.section>
 
             {/* Footer */}
-            <footer style={styles.footer}>
+            <motion.footer
+              style={styles.footer}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+            >
               <motion.p
                 style={styles.starText}
+                whileHover={{ scale: 1.05 }}
                 animate={{
-                  scale: [1, 1.1, 1],
                   textShadow: [
-                    "0 0 5px rgba(255, 215, 0, 0.5)",
-                    "0 0 15px rgba(255, 215, 0, 0.9)",
-                    "0 0 5px rgba(255, 215, 0, 0.5)",
+                    "0 0 5px rgba(255, 215, 0, 0.3)",
+                    "0 0 15px rgba(255, 215, 0, 0.6)",
+                    "0 0 5px rgba(255, 215, 0, 0.3)",
                   ],
                 }}
-                transition={{ duration: 2, repeat: Infinity }}
+                transition={{ duration: 3, repeat: Infinity }}
               >
                 ⭐ Star this repo if you like it!
               </motion.p>
-              <motion.p
-                style={styles.copyright}
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
+              <p style={styles.copyright}>
                 © 2026 Ar Asiful Islam • Built with React &{" "}
                 <FaHeart style={{ color: "#ff6b6b", marginLeft: 4 }} />
-              </motion.p>
-            </footer>
+              </p>
+            </motion.footer>
           </motion.div>
         )}
       </AnimatePresence>
@@ -681,6 +737,16 @@ const styles = {
     bottom: 0,
     pointerEvents: "none",
     zIndex: 0,
+  },
+  progressBar: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: "5px",
+    background: "linear-gradient(90deg, #667eea, #f093fb, #f5576c)",
+    transformOrigin: "0%",
+    zIndex: 1000,
   },
   orb: {
     position: "absolute",
