@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+vendor/
+packages/
+
+# Build outputs
+build/
+dist/
+*.apk
+*.ipa
+*.aab
+*.jar
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Test coverage
+coverage/
