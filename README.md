@@ -18,8 +18,6 @@
 
 ---
 
----
-
 ## 📊 GitHub Statistics
 
 <div align="center">
@@ -47,13 +45,8 @@
 
 ## 📈 Activity Graph
 
-```
-╔═══════════════════════════════════════════════════════════╗
-║  ████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 85%  Commits       ║
-║  ██████████████░░░░░░░░░░░░░░░░░░░░░ 60%  PRs           ║
-║  ██████████████████████░░░░░░░░░░░░░ 50%  Issues        ║
-╚═══════════════════════════════════════════════════════════╝
-```
+> [!TIP]
+> **Weekly Activity**: High engagement in Commits (85%) and consistent PR reviews (60%). Focused on maintaining quality and architectural integrity.
 
 ---
 
@@ -72,15 +65,8 @@
 
 <div align="center">
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║                                                               ║
-║    🌟 Thanks for visiting my Special Repo! 🌟                ║
-║                                                               ║
-║    Let's build something amazing together! 🚀               ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+> ### 🌟 Thanks for visiting my Special Repo!
+> **Let's build something amazing together!** 🚀
 
 ![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=iamacat02.iamacat02&style=for-the-badge)
 
