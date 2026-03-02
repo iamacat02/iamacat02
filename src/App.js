@@ -58,6 +58,12 @@ const skills = {
       color: "#3DDC84",
       shadow: "rgba(61, 220, 132, 0.6)",
     },
+    {
+      name: "Compose",
+      icon: <FaLayerGroup />,
+      color: "#4285F4",
+      shadow: "rgba(66, 133, 244, 0.6)",
+    },
   ],
   web: [
     {
@@ -77,6 +83,12 @@ const skills = {
       icon: <FaPython />,
       color: "#3776AB",
       shadow: "rgba(55, 118, 171, 0.6)",
+    },
+    {
+      name: "JavaScript",
+      icon: <FaCode />,
+      color: "#F7DF1E",
+      shadow: "rgba(247, 223, 30, 0.6)",
     },
   ],
   database: [
@@ -109,7 +121,7 @@ const skills = {
 
 const projects = [
   {
-    title: "Cross-Platform App",
+    title: "Mobile App",
     description: "Beautiful mobile application built with Flutter and Firebase",
     tech: ["Flutter", "Firebase", "MVVM"],
     gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
