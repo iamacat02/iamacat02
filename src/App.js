@@ -130,7 +130,10 @@ const projects = [
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -138,26 +141,69 @@ function App() {
     restDelta: 0.001,
   });
 
+  // Smooth cursor springs
+  const cursorX = useSpring(0, { stiffness: 500, damping: 28 });
+  const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
+
   useEffect(() => {
     setIsLoaded(true);
     const handleMouseMove = (e) => {
+      // Parallax position
       setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 30,
-        y: (e.clientY / window.innerHeight - 0.5) * 30,
+        x: (e.clientX / window.innerWidth - 0.5) * 40,
+        y: (e.clientY / window.innerHeight - 0.5) * 40,
+      });
+      // Cursor position
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+    };
+
+    const handleHoverStart = () => setIsHovering(true);
+    const handleHoverEnd = () => setIsHovering(false);
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    // Add hover listeners to all interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, [role="button"], span, div[style*="cursor: pointer"]');
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', handleHoverStart);
+      el.addEventListener('mouseleave', handleHoverEnd);
+    });
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      interactiveElements.forEach(el => {
+        el.removeEventListener('mouseenter', handleHoverStart);
+        el.removeEventListener('mouseleave', handleHoverEnd);
       });
     };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [cursorX, cursorY]);
 
   return (
     <div style={styles.container}>
+      {/* Custom Premium Cursor */}
+      <motion.div
+        style={{
+          ...styles.cursor,
+          left: cursorX,
+          top: cursorY,
+          scale: isHovering ? 2.5 : 1,
+          backgroundColor: isHovering ? "rgba(102, 126, 234, 0.3)" : "rgba(102, 126, 234, 0.8)",
+          mixBlendMode: isHovering ? "difference" : "normal",
+        }}
+      >
+        <motion.div
+          style={styles.cursorInner}
+          animate={{ scale: isHovering ? 0 : 1 }}
+        />
+      </motion.div>
+
       {/* Scroll Progress Bar */}
       <motion.div style={{ ...styles.progressBar, scaleX }} />
 
       {/* Always Animated Background */}
       <div style={styles.background}>
-        {/* Floating orbs */}
+        {/* Floating orbs with mouse parallax */}
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
@@ -167,19 +213,19 @@ function App() {
               top: `${15 + (i % 3) * 25}%`,
               background:
                 i % 2 === 0
-                  ? "radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%)"
-                  : "radial-gradient(circle, rgba(240, 147, 251, 0.3) 0%, transparent 70%)",
+                  ? "radial-gradient(circle, rgba(102, 126, 234, 0.25) 0%, transparent 70%)"
+                  : "radial-gradient(circle, rgba(240, 147, 251, 0.25) 0%, transparent 70%)",
+              x: mousePosition.x * (i % 2 === 0 ? 1 : -1) * (i * 0.2),
+              y: mousePosition.y * (i % 2 === 0 ? -1 : 1) * (i * 0.2),
             }}
             animate={{
-              y: [0, -80, 0],
-              x: [0, 40, 0],
-              scale: [1, 1.4, 1],
-              opacity: [0.3, 0.7, 0.3],
+              y: [0, -40, 0],
+              x: [0, 20, 0],
+              scale: [1, 1.2, 1],
             }}
             transition={{
-              duration: 4 + i * 0.5,
+              duration: 10 + i,
               repeat: Infinity,
-              delay: i * 0.3,
               ease: "easeInOut",
             }}
           />
@@ -491,10 +537,20 @@ function App() {
                     whileHover={{
                       y: -15,
                       scale: 1.02,
-                      boxShadow: "0 30px 60px rgba(0,0,0,0.4)",
+                      rotateX: 5,
+                      rotateY: 5,
+                      boxShadow: "0 30px 60px rgba(0,0,0,0.5)",
                       transition: { duration: 0.3, ease: "easeOut" },
                     }}
                   >
+                    {/* Premium Glare Effect */}
+                    <motion.div
+                      style={styles.glare}
+                      initial={{ left: "-100%", top: "-100%" }}
+                      whileHover={{ left: ["100%", "-100%"], top: ["100%", "-100%"] }}
+                      transition={{ duration: 1, ease: "easeInOut" }}
+                    />
+
                     <h3 style={styles.projectTitle}>{project.title}</h3>
                     <p style={styles.projectDesc}>{project.description}</p>
                     <div style={styles.projectTags}>
@@ -606,8 +662,8 @@ function App() {
                     <span style={styles.statLabel}>{stat.label}</span>
                   </motion.div>
                 ))}
-              </div>
-            </section>
+              </motion.div>
+            </motion.section>
 
             {/* Contact Section */}
             <motion.section
@@ -723,11 +779,32 @@ function App() {
 const styles = {
   container: {
     minHeight: "100vh",
+    cursor: "none",
     background:
       "linear-gradient(135deg, #0d1117 0%, #0a0e14 50%, #0d1117 100%)",
     color: "#ffffff",
     position: "relative",
     overflow: "hidden",
+  },
+  cursor: {
+    position: "fixed",
+    width: "40px",
+    height: "40px",
+    borderRadius: "50%",
+    pointerEvents: "none",
+    zIndex: 9999,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "2px solid rgba(102, 126, 234, 0.5)",
+    transform: "translate(-50%, -50%)",
+  },
+  cursorInner: {
+    width: "6px",
+    height: "6px",
+    backgroundColor: "#667eea",
+    borderRadius: "50%",
+    boxShadow: "0 0 10px #667eea, 0 0 20px #f093fb",
   },
   background: {
     position: "fixed",
@@ -884,10 +961,13 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     padding: "28px 38px",
-    background: "rgba(22, 27, 34, 0.85)",
-    borderRadius: "22px",
-    border: "2px solid",
-    minWidth: "140px",
+    background: "rgba(22, 27, 34, 0.4)",
+    backdropFilter: "blur(12px)",
+    WebkitBackdropFilter: "blur(12px)",
+    borderRadius: "24px",
+    border: "1px solid rgba(255, 255, 255, 0.1)",
+    boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+    minWidth: "150px",
     cursor: "pointer",
   },
   skillIcon: {
@@ -905,9 +985,25 @@ const styles = {
     gap: "32px",
   },
   projectCard: {
-    padding: "38px",
-    borderRadius: "26px",
+    padding: "40px",
+    borderRadius: "32px",
+    backdropFilter: "blur(8px)",
+    WebkitBackdropFilter: "blur(8px)",
+    border: "1px solid rgba(255, 255, 255, 0.1)",
     cursor: "pointer",
+    position: "relative",
+    overflow: "hidden",
+    transformStyle: "preserve-3d",
+    perspective: "1000px",
+  },
+  glare: {
+    position: "absolute",
+    width: "200%",
+    height: "200%",
+    background: "linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent)",
+    transform: "rotate(45deg)",
+    pointerEvents: "none",
+    zIndex: 1,
   },
   projectTitle: {
     fontSize: "26px",
