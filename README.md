@@ -22,8 +22,9 @@
 
 <div align="center">
 
-![Alt](https://github-readme-stats.vercel.app/api?username=iamacat02&show_icons=true&theme=transparent&hide_border=true&bg_color=0d1117&text_color=ffffff)
-![Alt](https://github-readme-stats.vercel.app/api/top-langs/?username=iamacat02&layout=compact&theme=transparent&hide_border=true&bg_color=0d1117&text_color=ffffff)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=iamacat02&show_icons=true&theme=tokyonight&hide_border=true)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=iamacat02&layout=compact&theme=tokyonight&hide_border=true)
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=iamacat02&theme=tokyonight&hide_border=true)
 
 </div>
 
