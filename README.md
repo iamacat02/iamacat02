@@ -4,9 +4,9 @@
 
 <div align="center">
 
-![Profile Views](https://komarev.com/ghpvc/?username=iamacat02&label=Profile%20Views&color=0e75b6&style=for-the-badge)
-![GitHub Followers](https://img.shields.io/github/followers/iamacat02?color=4f46e5&style=for-the-badge)
-![Stars](https://img.shields.io/github/stars/iamacat02/iamacat02?color=fbbf24&style=for-the-badge)
+  <img src="https://komarev.com/ghpvc/?username=iamacat02&label=Profile%20Views&color=0e75b6&style=for-the-badge" alt="Profile Views" />
+  <img src="https://img.shields.io/github/followers/iamacat02?color=4f46e5&style=for-the-badge" alt="GitHub Followers" />
+  <img src="https://img.shields.io/github/stars/iamacat02/iamacat02?color=fbbf24&style=for-the-badge" alt="Stars" />
 
 </div>
 
@@ -22,9 +22,9 @@
 
 <div align="center">
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=iamacat02&show_icons=true&theme=dark&hide_border=true)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=iamacat02&layout=compact&theme=dark&hide_border=true)
-![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=iamacat02&theme=dark&hide_border=true)
+  <img src="https://github-readme-stats.vercel.app/api?username=iamacat02&show_icons=true&theme=dark&hide_border=true" alt="GitHub Stats" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=iamacat02&layout=compact&theme=dark&hide_border=true" alt="Top Langs" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=iamacat02&theme=dark&hide_border=true" alt="GitHub Streak" />
 
 </div>
 
@@ -48,7 +48,7 @@
 
 <div align="center">
 
-![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=iamacat02&theme=github-dark&hide_border=true)
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=iamacat02&theme=github-dark&hide_border=true" alt="Activity Graph" />
 
 </div>
 
