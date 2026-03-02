@@ -109,7 +109,7 @@ function App() {
         >
           KA
         </motion.div>
-        <h1 style={styles.name}>Kj-Anis</h1>
+        <h1 style={styles.name}>Ar Asiful Islam</h1>
         <motion.p
           style={styles.title}
           initial={{ opacity: 0 }}
@@ -299,7 +299,9 @@ function App() {
         viewport={{ once: true }}
       >
         <p>⭐ Star this repo if you like it!</p>
-        <p style={styles.copyright}>© 2026 Kj-Anis. Built with React & 💜</p>
+        <p style={styles.copyright}>
+          © 2026 Ar Asiful Islam. Built with React & 💜
+        </p>
       </motion.footer>
     </div>
   );
