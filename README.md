@@ -1,81 +1,76 @@
-# 👋 Hello, I'm Asiful Islam!
+# 👋 Hello, I'm Kj-Anis!
 
 <div align="center">
 
-![Banner](./assets/banner.png)
+```yaml
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   🚀  Full-Stack Mobile & Web Developer                         ║
+║   🎯  Building Cross-Platform Experiences                        ║
+║   💻  Java | Kotlin | Flutter | React                           ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+```
 
-### 🚀 Full-Stack Mobile & Web Developer
-
-### 🎯 Building Cross-Platform Experiences
+![Profile Views](https://komarev.com/ghpvc/?username=iamacat02&label=Profile%20Views&color=0e75b6&style=for-the-badge)
+![GitHub Followers](https://img.shields.io/github/followers/kj-anis?color=4f46e5&style=for-the-badge)
+![Stars](https://img.shields.io/github/stars/kj-anis?color=fbbf24&style=for-the-badge)
 
 </div>
 
 ---
 
-## 💻 Tech Stack & Skills
+## 🛠️ Tech Stack
 
-### 🎮 Mobile Development
+### 📱 Mobile Development
 
-<div align="left">
+<div align="center">
 
-![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
-![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![Jetpack Compose](https://img.shields.io/badge/Jetpack_Compose-4285F4?style=for-the-badge&logo=jetpack-compose&logoColor=white)
+|                                           Flutter                                           |                                          Kotlin                                          |                                        Java                                        |                                           Android                                           |                                         Jetpack Compose                                          |
+| :-----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
+| ![Flutter](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg) | ![Kotlin](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg) | ![Java](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg) | ![Android](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg) | ![Compose](https://upload.wikimedia.org/wikipedia/commons/4/44/Google_Forms_Logo_%282020%29.svg) |
 
 </div>
+
+```markdown
+┌─────────────────────────────────────────────────────────────┐
+│ 🎮 Mobile: Flutter ⚡ Kotlin ⚡ Java ⚡ Android ⚡ Compose │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ### 🌐 Web Development
 
-<div align="left">
+```markdown
+┌─────────────────────────────────────────────────────────────┐
+│ 🌐 Frontend: React ⚡ HTML5 ⚡ CSS3 ⚡ JavaScript │
+│ 🌐 Backend: Node.js ⚡ Python │
+└─────────────────────────────────────────────────────────────┘
+```
 
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+### 🗄️ Databases & APIs
 
-</div>
-
-### 🐍 Backend & Scripting
-
-<div align="left">
-
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
-
-</div>
-
-### 🗄️ Databases
-
-<div align="left">
-
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white)
-
-</div>
+```
+┌─────────────────────────────────────────────────────────────┐
+│  🗄️ MySQL ⚡ PostgreSQL ⚡ MongoDB ⚡ Firebase ⚡ APIs       │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ### 🏗️ Architecture & Patterns
 
-<div align="left">
-
-![MVVM](https://img.shields.io/badge/MVVM-FF6F00?style=for-the-badge&logoColor=white)
-![MVC](https://img.shields.io/badge/MVC-4CAF50?style=for-the-badge&logoColor=white)
-![Clean Architecture](https://img.shields.io/badge/Clean_Architecture-000000?style=for-the-badge&logoColor=white)
-
-</div>
+```
+┌─────────────────────────────────────────────────────────────┐
+│  📐 MVVM ⚡ MVC ⚡ Clean Architecture ⚡ State Management    │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 📊 GitHub Stats
+## 📊 GitHub Statistics
 
 <div align="center">
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=kj-anis&show_icons=true&theme=radical&hide_border=true&bg_color=0d1117)
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=kj-anis&layout=compact&theme=radical&hide_border=true&bg_color=0d1117)
+![Alt](https://github-readme-stats.vercel.app/api?username=kj-anis&show_icons=true&theme=transparent&hide_border=true&bg_color=0d1117&text_color=ffffff)
+![Alt](https://github-readme-stats.vercel.app/api/top-langs/?username=kj-anis&layout=compact&theme=transparent&hide_border=true&bg_color=0d1117&text_color=ffffff)
 
 </div>
 
@@ -83,15 +78,31 @@
 
 ## 🏆 Featured Projects
 
-| Project                                                 | Description            | Tech Stack              |
-| ------------------------------------------------------- | ---------------------- | ----------------------- |
-| [Special Repo](https://github.com/kj-anis/special-repo) | Personal Portfolio     | Flutter, React          |
-| [Mobile App](https://github.com/kj-anis)                | Cross-Platform App     | Flutter, Kotlin         |
-| [Web App](https://github.com/kj-anis)                   | Full-Stack Application | React, Node.js, MongoDB |
+<div align="center">
+
+| Project               | Description                | Tech Stack                    |
+| :-------------------- | :------------------------- | :---------------------------- |
+| 🎯 **Mobile App**     | Cross-Platform Application | Flutter, Kotlin, Firebase     |
+| 🌐 **Web Platform**   | Full-Stack Solution        | React, Node.js, MongoDB       |
+| 🔷 **Android Native** | Native Android App         | Kotlin, Jetpack Compose, MVVM |
+
+</div>
 
 ---
 
-## 📫 Connect With Me
+## 📈 Activity Graph
+
+```
+╔═══════════════════════════════════════════════════════════╗
+║  ████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 85%  Commits       ║
+║  ██████████████░░░░░░░░░░░░░░░░░░░░░ 60%  PRs           ║
+║  ██████████████████████░░░░░░░░░░░░░ 50%  Issues        ║
+╚═══════════════════════════════════════════════════════════╝
+```
+
+---
+
+## 💬 Connect With Me
 
 <div align="center">
 
@@ -106,12 +117,20 @@
 
 <div align="center">
 
-### 🌟 Thanks for visiting my special repo! 🌟
+```
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║    🌟 Thanks for visiting my Special Repo! 🌟                ║
+║                                                               ║
+║    Let's build something amazing together! 🚀               ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+```
 
-_Let's build something amazing together!_
+![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=kj-anis.special-repo&style=for-the-badge)
 
 ---
 
-![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=kj-anis.special-repo&style=flat-square&logo=github)
+**⭐ Star this repo if you like it!**
 
 </div>
