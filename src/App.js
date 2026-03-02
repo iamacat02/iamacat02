@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   FaFlutter,
   FaReact,
@@ -10,9 +10,11 @@ import {
   FaLinkedin,
   FaTwitter,
   FaEnvelope,
-  FaDatabase,
   FaAndroid,
   FaCode,
+  FaRocket,
+  FaHeart,
+  FaStar,
 } from "react-icons/fa";
 import {
   SiKotlin,
@@ -24,34 +26,89 @@ import {
 
 const skills = {
   mobile: [
-    { name: "Flutter", icon: <FaFlutter />, color: "#02569B" },
-    { name: "Kotlin", icon: <SiKotlin />, color: "#7F52FF" },
-    { name: "Java", icon: <FaJava />, color: "#ED8B00" },
-    { name: "Android", icon: <FaAndroid />, color: "#3DDC84" },
+    {
+      name: "Flutter",
+      icon: <FaFlutter />,
+      color: "#02569B",
+      shadow: "rgba(2, 86, 155, 0.6)",
+    },
+    {
+      name: "Kotlin",
+      icon: <SiKotlin />,
+      color: "#7F52FF",
+      shadow: "rgba(127, 82, 255, 0.6)",
+    },
+    {
+      name: "Java",
+      icon: <FaJava />,
+      color: "#ED8B00",
+      shadow: "rgba(237, 139, 0, 0.6)",
+    },
+    {
+      name: "Android",
+      icon: <FaAndroid />,
+      color: "#3DDC84",
+      shadow: "rgba(61, 220, 132, 0.6)",
+    },
   ],
   web: [
-    { name: "React", icon: <FaReact />, color: "#61DAFB" },
-    { name: "Node.js", icon: <FaNodeJs />, color: "#339933" },
-    { name: "Python", icon: <FaPython />, color: "#3776AB" },
+    {
+      name: "React",
+      icon: <FaReact />,
+      color: "#61DAFB",
+      shadow: "rgba(97, 218, 251, 0.6)",
+    },
+    {
+      name: "Node.js",
+      icon: <FaNodeJs />,
+      color: "#339933",
+      shadow: "rgba(51, 153, 51, 0.6)",
+    },
+    {
+      name: "Python",
+      icon: <FaPython />,
+      color: "#3776AB",
+      shadow: "rgba(55, 118, 171, 0.6)",
+    },
   ],
   database: [
-    { name: "MongoDB", icon: <SiMongodb />, color: "#47A248" },
-    { name: "MySQL", icon: <SiMysql />, color: "#4479A1" },
-    { name: "PostgreSQL", icon: <SiPostgresql />, color: "#4169E1" },
-    { name: "Firebase", icon: <SiFirebase />, color: "#FFCA28" },
+    {
+      name: "MongoDB",
+      icon: <SiMongodb />,
+      color: "#47A248",
+      shadow: "rgba(71, 162, 72, 0.6)",
+    },
+    {
+      name: "MySQL",
+      icon: <SiMysql />,
+      color: "#4479A1",
+      shadow: "rgba(68, 121, 161, 0.6)",
+    },
+    {
+      name: "PostgreSQL",
+      icon: <SiPostgresql />,
+      color: "#4169E1",
+      shadow: "rgba(65, 105, 225, 0.6)",
+    },
+    {
+      name: "Firebase",
+      icon: <SiFirebase />,
+      color: "#FFCA28",
+      shadow: "rgba(255, 202, 40, 0.6)",
+    },
   ],
 };
 
 const projects = [
   {
     title: "Cross-Platform App",
-    description: "Beautiful mobile application built with Flutter",
+    description: "Beautiful mobile application built with Flutter and Firebase",
     tech: ["Flutter", "Firebase", "MVVM"],
     gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   },
   {
-    title: "Android Native App",
-    description: "Native Android application with Jetpack Compose",
+    title: "Android Native",
+    description: "Native Android app with Jetpack Compose",
     tech: ["Kotlin", "Compose", "MVVM"],
     gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
   },
@@ -64,80 +121,207 @@ const projects = [
 ];
 
 function App() {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
+  const y2 = useTransform(scrollY, [0, 1000], [0, -200]);
+
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
     <div style={styles.container}>
       {/* Animated Background */}
       <div style={styles.background}>
-        {[...Array(20)].map((_, i) => (
+        {[...Array(50)].map((_, i) => (
           <motion.div
             key={i}
             style={{
-              ...styles.star,
+              ...styles.particle,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 4 + 2}px`,
+              height: `${Math.random() * 4 + 2}px`,
             }}
             animate={{
-              opacity: [0.1, 0.8, 0.1],
+              y: [0, -100, 0],
+              opacity: [0.2, 1, 0.2],
               scale: [1, 1.5, 1],
             }}
             transition={{
-              duration: 2 + Math.random() * 2,
+              duration: 2 + Math.random() * 3,
               repeat: Infinity,
               delay: Math.random() * 2,
+              ease: "easeInOut",
             }}
           />
         ))}
-      </div>
 
-      {/* Header */}
-      <motion.header
-        style={styles.header}
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
+        {/* Floating Shapes */}
         <motion.div
-          style={styles.avatar}
+          style={styles.floatingShape1}
           animate={{
             rotate: 360,
-            scale: [1, 1.1, 1],
+            scale: [1, 1.2, 1],
           }}
           transition={{
             rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-            scale: { duration: 2, repeat: Infinity },
+            scale: { duration: 3, repeat: Infinity },
+          }}
+        />
+        <motion.div
+          style={styles.floatingShape2}
+          animate={{
+            rotate: -360,
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            rotate: { duration: 25, repeat: Infinity, ease: "linear" },
+            scale: { duration: 4, repeat: Infinity },
+          }}
+        />
+      </div>
+
+      {/* Hero Section */}
+      <motion.section
+        style={{ ...styles.hero, y: mousePosition.y }}
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: { transition: { staggerChildren: 0.1 } },
+        }}
+      >
+        <motion.div
+          style={styles.avatarContainer}
+          variants={{
+            hidden: { scale: 0, opacity: 0 },
+            visible: {
+              scale: 1,
+              opacity: 1,
+              transition: { type: "spring", stiffness: 200 },
+            },
+          }}
+          whileHover={{ scale: 1.1, rotate: 5 }}
+        >
+          <motion.div
+            style={styles.avatarGlow}
+            animate={{
+              boxShadow: [
+                "0 0 20px rgba(102, 126, 234, 0.5)",
+                "0 0 40px rgba(102, 126, 234, 0.8)",
+                "0 0 60px rgba(240, 147, 251, 0.6)",
+                "0 0 40px rgba(102, 126, 234, 0.8)",
+              ],
+            }}
+            transition={{ duration: 3, repeat: Infinity }}
+          />
+          <motion.div
+            style={styles.avatar}
+            animate={{
+              rotate: [0, 360],
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          >
+            <span style={styles.avatarText}>AA</span>
+          </motion.div>
+        </motion.div>
+
+        <motion.h1
+          style={styles.name}
+          variants={{
+            hidden: { y: 50, opacity: 0 },
+            visible: {
+              y: 0,
+              opacity: 1,
+              transition: { type: "spring", stiffness: 100 },
+            },
           }}
         >
-          KA
-        </motion.div>
-        <h1 style={styles.name}>Ar Asiful Islam</h1>
+          <motion.span
+            animate={{
+              textShadow: [
+                "0 0 10px rgba(102, 126, 234, 0.5)",
+                "0 0 20px rgba(102, 126, 234, 0.8)",
+                "0 0 30px rgba(240, 147, 251, 0.6)",
+                "0 0 20px rgba(102, 126, 234, 0.8)",
+              ],
+            }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            Ar Asiful Islam
+          </motion.span>
+        </motion.h1>
+
         <motion.p
           style={styles.title}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          variants={{
+            hidden: { y: 30, opacity: 0 },
+            visible: { y: 0, opacity: 1, transition: { delay: 0.3 } },
+          }}
         >
-          Full-Stack Mobile & Web Developer
+          <motion.span
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            🚀 Full-Stack Mobile & Web Developer
+          </motion.span>
         </motion.p>
+
         <motion.div
           style={styles.tags}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
+          variants={{
+            hidden: { y: 20, opacity: 0 },
+            visible: { y: 0, opacity: 1, transition: { delay: 0.5 } },
+          }}
         >
-          <span style={styles.tag}>🚀 Flutter</span>
-          <span style={styles.tag}>⚡ Kotlin</span>
-          <span style={styles.tag}>💻 Java</span>
-          <span style={styles.tag}>🌐 React</span>
+          {["Flutter", "Kotlin", "Java", "React", "Node.js", "Python"].map(
+            (tag, i) => (
+              <motion.span
+                key={tag}
+                style={styles.tag}
+                whileHover={{ scale: 1.1, rotate: Math.random() * 10 - 5 }}
+                animate={{
+                  y: [0, -5, 0],
+                }}
+                transition={{
+                  y: { duration: 2, repeat: Infinity, delay: i * 0.2 },
+                }}
+              >
+                {tag}
+              </motion.span>
+            ),
+          )}
         </motion.div>
-      </motion.header>
+
+        <motion.div
+          style={styles.scrollIndicator}
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        >
+          <span>Scroll Down</span>
+          <motion.div style={styles.scrollArrow} animate={{ rotate: -45 }}>
+            ↓
+          </motion.div>
+        </motion.div>
+      </motion.section>
 
       {/* Skills Section */}
       <section style={styles.section}>
         <motion.h2
           style={styles.sectionTitle}
-          initial={{ opacity: 0, x: -50 }}
+          initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8 }}
         >
           🛠️ Tech Stack
         </motion.h2>
@@ -146,9 +330,9 @@ function App() {
           <motion.div
             key={category}
             style={styles.skillCategory}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ delay: categoryIndex * 0.2 }}
           >
             <h3 style={styles.categoryTitle}>
@@ -162,17 +346,28 @@ function App() {
                   key={skill.name}
                   style={{ ...styles.skillCard, borderColor: skill.color }}
                   whileHover={{
-                    scale: 1.1,
-                    boxShadow: `0 0 30px ${skill.color}40`,
+                    scale: 1.15,
+                    rotate: Math.random() * 10 - 5,
+                    boxShadow: `0 0 30px ${skill.shadow}`,
                   }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  animate={{
+                    y: [0, -10, 0],
+                  }}
+                  transition={{
+                    y: { duration: 2, repeat: Infinity, delay: index * 0.1 },
+                  }}
                 >
-                  <span style={{ ...styles.skillIcon, color: skill.color }}>
+                  <motion.span
+                    style={{ ...styles.skillIcon, color: skill.color }}
+                    animate={{ rotate: [0, 360] }}
+                    transition={{
+                      duration: 10,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  >
                     {skill.icon}
-                  </span>
+                  </motion.span>
                   <span style={styles.skillName}>{skill.name}</span>
                 </motion.div>
               ))}
@@ -185,9 +380,10 @@ function App() {
       <section style={styles.section}>
         <motion.h2
           style={styles.sectionTitle}
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, scale: 0.5 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8 }}
         >
           🏆 Featured Projects
         </motion.h2>
@@ -196,19 +392,39 @@ function App() {
             <motion.div
               key={project.title}
               style={{ ...styles.projectCard, background: project.gradient }}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false }}
               transition={{ delay: index * 0.2 }}
-              whileHover={{ scale: 1.05, rotate: 1 }}
+              whileHover={{
+                scale: 1.08,
+                rotate: 2,
+                boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+              }}
+              whileTap={{ scale: 0.98 }}
             >
-              <h3 style={styles.projectTitle}>{project.title}</h3>
+              <motion.h3
+                style={styles.projectTitle}
+                whileHover={{ scale: 1.05 }}
+              >
+                {project.title}
+              </motion.h3>
               <p style={styles.projectDesc}>{project.description}</p>
               <div style={styles.projectTags}>
-                {project.tech.map((t) => (
-                  <span key={t} style={styles.projectTag}>
+                {project.tech.map((t, i) => (
+                  <motion.span
+                    key={t}
+                    style={styles.projectTag}
+                    whileHover={{ scale: 1.2, rotate: 5 }}
+                    animate={{
+                      scale: [1, 1.1, 1],
+                    }}
+                    transition={{
+                      scale: { duration: 2, repeat: Infinity, delay: i * 0.3 },
+                    }}
+                  >
                     {t}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </motion.div>
@@ -220,40 +436,55 @@ function App() {
       <section style={styles.section}>
         <motion.div
           style={styles.statsContainer}
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false }}
         >
-          <div style={styles.stat}>
-            <motion.span
-              style={styles.statNumber}
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+          {[
+            { number: "50+", label: "Projects", icon: <FaCode /> },
+            { number: "500+", label: "Commits", icon: <FaGithub /> },
+            { number: "20+", label: "Skills", icon: <FaRocket /> },
+            { number: "100%", label: "Passion", icon: <FaHeart /> },
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              style={styles.stat}
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: false }}
+              transition={{ delay: index * 0.1, type: "spring" }}
+              whileHover={{ scale: 1.1 }}
             >
-              50+
-            </motion.span>
-            <span style={styles.statLabel}>Projects</span>
-          </div>
-          <div style={styles.stat}>
-            <motion.span
-              style={styles.statNumber}
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-            >
-              100+
-            </motion.span>
-            <span style={styles.statLabel}>Commits</span>
-          </div>
-          <div style={styles.stat}>
-            <motion.span
-              style={styles.statNumber}
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-            >
-              20+
-            </motion.span>
-            <span style={styles.statLabel}>Skills</span>
-          </div>
+              <motion.span
+                style={styles.statIcon}
+                animate={{
+                  scale: [1, 1.3, 1],
+                  rotate: [0, 15, -15, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: index * 0.2,
+                }}
+              >
+                {stat.icon}
+              </motion.span>
+              <motion.span
+                style={styles.statNumber}
+                animate={{
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: index * 0.3,
+                }}
+              >
+                {stat.number}
+              </motion.span>
+              <span style={styles.statLabel}>{stat.label}</span>
+            </motion.div>
+          ))}
         </motion.div>
       </section>
 
@@ -261,28 +492,52 @@ function App() {
       <section style={styles.section}>
         <motion.h2
           style={styles.sectionTitle}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: -50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
         >
           📬 Connect With Me
         </motion.h2>
         <div style={styles.socialLinks}>
           {[
-            { icon: <FaGithub />, label: "GitHub", color: "#ffffff" },
-            { icon: <FaLinkedin />, label: "LinkedIn", color: "#0077B5" },
-            { icon: <FaTwitter />, label: "Twitter", color: "#1DA1F2" },
-            { icon: <FaEnvelope />, label: "Email", color: "#EA4335" },
+            {
+              icon: <FaGithub />,
+              label: "GitHub",
+              color: "#ffffff",
+              href: "https://github.com/iamacat02",
+            },
+            {
+              icon: <FaLinkedin />,
+              label: "LinkedIn",
+              color: "#0077B5",
+              href: "https://linkedin.com/in/iamacat02",
+            },
+            {
+              icon: <FaTwitter />,
+              label: "Twitter",
+              color: "#1DA1F2",
+              href: "https://twitter.com/iamacat02",
+            },
+            {
+              icon: <FaEnvelope />,
+              label: "Email",
+              color: "#EA4335",
+              href: "mailto:iamacat02@email.com",
+            },
           ].map((social, index) => (
             <motion.a
               key={social.label}
-              href="#"
+              href={social.href}
               style={{ ...styles.socialLink, color: social.color }}
-              whileHover={{ scale: 1.2, rotate: 5 }}
+              whileHover={{
+                scale: 1.4,
+                rotate: 10,
+                boxShadow: `0 0 30px ${social.color}80`,
+              }}
               whileTap={{ scale: 0.9 }}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ delay: index * 0.1 }}
             >
               {social.icon}
@@ -296,12 +551,21 @@ function App() {
         style={styles.footer}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
       >
-        <p>⭐ Star this repo if you like it!</p>
-        <p style={styles.copyright}>
-          © 2026 Ar Asiful Islam. Built with React & 💜
-        </p>
+        <motion.div whileHover={{ scale: 1.05 }}>
+          <p style={styles.starText}>⭐ Star this repo if you like it!</p>
+        </motion.div>
+        <motion.p
+          style={styles.copyright}
+          animate={{
+            opacity: [0.5, 1, 0.5],
+          }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          © 2026 Ar Asiful Islam. Built with React &{" "}
+          <FaHeart style={{ color: "#ff6b6b" }} />
+        </motion.p>
       </motion.footer>
     </div>
   );
@@ -310,7 +574,8 @@ function App() {
 const styles = {
   container: {
     minHeight: "100vh",
-    background: "#0d1117",
+    background:
+      "linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%)",
     color: "#ffffff",
     position: "relative",
     overflow: "hidden",
@@ -323,84 +588,146 @@ const styles = {
     bottom: 0,
     pointerEvents: "none",
     zIndex: 0,
+    overflow: "hidden",
   },
-  star: {
+  particle: {
     position: "absolute",
-    width: "3px",
-    height: "3px",
-    background: "#ffffff",
+    background: "linear-gradient(135deg, #667eea, #f093fb)",
     borderRadius: "50%",
   },
-  header: {
-    textAlign: "center",
-    padding: "80px 20px 40px",
+  floatingShape1: {
+    position: "absolute",
+    top: "10%",
+    left: "5%",
+    width: "300px",
+    height: "300px",
+    background:
+      "radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%)",
+    borderRadius: "50%",
+  },
+  floatingShape2: {
+    position: "absolute",
+    bottom: "20%",
+    right: "10%",
+    width: "200px",
+    height: "200px",
+    background:
+      "radial-gradient(circle, rgba(240, 147, 251, 0.15) 0%, transparent 70%)",
+    borderRadius: "50%",
+  },
+  hero: {
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "40px 20px",
     position: "relative",
     zIndex: 1,
+  },
+  avatarContainer: {
+    position: "relative",
+    marginBottom: "30px",
+  },
+  avatarGlow: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "140px",
+    height: "140px",
+    borderRadius: "50%",
   },
   avatar: {
     width: "120px",
     height: "120px",
     borderRadius: "50%",
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    background:
+      "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "40px",
+    position: "relative",
+    zIndex: 1,
+  },
+  avatarText: {
+    fontSize: "42px",
     fontWeight: "bold",
-    margin: "0 auto 20px",
-    boxShadow: "0 0 40px rgba(102, 126, 234, 0.5)",
+    color: "#ffffff",
   },
   name: {
-    fontSize: "48px",
-    fontWeight: "800",
-    marginBottom: "10px",
-    background: "linear-gradient(135deg, #667eea 0%, #f093fb 100%)",
+    fontSize: "clamp(36px, 8vw, 64px)",
+    fontWeight: "900",
+    marginBottom: "15px",
+    background:
+      "linear-gradient(135deg, #667eea 0%, #f093fb 50%, #f5576c 100%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
   },
   title: {
-    fontSize: "20px",
+    fontSize: "clamp(18px, 4vw, 24px)",
     color: "#8b949e",
-    marginBottom: "20px",
+    marginBottom: "25px",
   },
   tags: {
     display: "flex",
-    gap: "10px",
-    justifyContent: "center",
+    gap: "12px",
     flexWrap: "wrap",
+    justifyContent: "center",
+    marginBottom: "40px",
   },
   tag: {
-    padding: "8px 16px",
-    background: "rgba(102, 126, 234, 0.2)",
-    borderRadius: "20px",
+    padding: "10px 20px",
+    background: "rgba(102, 126, 234, 0.15)",
+    borderRadius: "25px",
     fontSize: "14px",
+    fontWeight: "500",
     color: "#c9d1d9",
     border: "1px solid rgba(102, 126, 234, 0.3)",
+    cursor: "pointer",
+  },
+  scrollIndicator: {
+    position: "absolute",
+    bottom: "30px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "10px",
+    color: "#8b949e",
+    fontSize: "14px",
+  },
+  scrollArrow: {
+    fontSize: "20px",
   },
   section: {
-    padding: "60px 20px",
-    maxWidth: "1000px",
+    padding: "80px 20px",
+    maxWidth: "1200px",
     margin: "0 auto",
     position: "relative",
     zIndex: 1,
   },
   sectionTitle: {
-    fontSize: "32px",
-    fontWeight: "700",
-    marginBottom: "30px",
+    fontSize: "clamp(28px, 5vw, 40px)",
+    fontWeight: "800",
+    marginBottom: "40px",
     textAlign: "center",
+    background: "linear-gradient(135deg, #667eea 0%, #f093fb 100%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
   },
   skillCategory: {
-    marginBottom: "30px",
+    marginBottom: "40px",
   },
   categoryTitle: {
-    fontSize: "18px",
+    fontSize: "20px",
     color: "#8b949e",
-    marginBottom: "15px",
+    marginBottom: "20px",
+    textAlign: "center",
   },
   skillGrid: {
     display: "flex",
-    gap: "15px",
+    gap: "20px",
     flexWrap: "wrap",
     justifyContent: "center",
   },
@@ -409,69 +736,79 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: "20px 30px",
-    background: "rgba(22, 27, 34, 0.8)",
-    borderRadius: "16px",
+    padding: "25px 35px",
+    background: "rgba(22, 27, 34, 0.9)",
+    borderRadius: "20px",
     border: "2px solid",
-    minWidth: "120px",
+    minWidth: "130px",
+    cursor: "pointer",
     transition: "all 0.3s ease",
   },
   skillIcon: {
-    fontSize: "32px",
-    marginBottom: "8px",
+    fontSize: "36px",
+    marginBottom: "10px",
   },
   skillName: {
-    fontSize: "14px",
-    fontWeight: "500",
+    fontSize: "15px",
+    fontWeight: "600",
     color: "#c9d1d9",
   },
   projectGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "25px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+    gap: "30px",
   },
   projectCard: {
-    padding: "30px",
-    borderRadius: "20px",
+    padding: "35px",
+    borderRadius: "24px",
     cursor: "pointer",
     transition: "all 0.3s ease",
   },
   projectTitle: {
-    fontSize: "22px",
+    fontSize: "24px",
     fontWeight: "700",
-    marginBottom: "10px",
+    marginBottom: "12px",
     color: "#ffffff",
   },
   projectDesc: {
-    fontSize: "14px",
-    color: "rgba(255, 255, 255, 0.8)",
-    marginBottom: "15px",
+    fontSize: "15px",
+    color: "rgba(255, 255, 255, 0.85)",
+    marginBottom: "18px",
   },
   projectTags: {
     display: "flex",
-    gap: "8px",
+    gap: "10px",
     flexWrap: "wrap",
   },
   projectTag: {
-    padding: "4px 12px",
-    background: "rgba(255, 255, 255, 0.2)",
-    borderRadius: "12px",
-    fontSize: "12px",
+    padding: "6px 14px",
+    background: "rgba(255, 255, 255, 0.25)",
+    borderRadius: "15px",
+    fontSize: "13px",
+    fontWeight: "500",
     color: "#ffffff",
+    cursor: "pointer",
   },
   statsContainer: {
     display: "flex",
     justifyContent: "center",
-    gap: "60px",
+    gap: "clamp(30px, 8vw, 80px)",
     flexWrap: "wrap",
   },
   stat: {
     textAlign: "center",
+    cursor: "pointer",
+  },
+  statIcon: {
+    display: "block",
+    fontSize: "32px",
+    marginBottom: "10px",
+    color: "#667eea",
   },
   statNumber: {
     display: "block",
-    fontSize: "48px",
-    fontWeight: "800",
+    fontSize: "clamp(36px, 6vw, 56px)",
+    fontWeight: "900",
     background: "linear-gradient(135deg, #667eea 0%, #f093fb 100%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
@@ -479,26 +816,33 @@ const styles = {
   statLabel: {
     fontSize: "16px",
     color: "#8b949e",
+    fontWeight: "500",
   },
   socialLinks: {
     display: "flex",
     justifyContent: "center",
-    gap: "30px",
+    gap: "clamp(25px, 6vw, 50px)",
   },
   socialLink: {
-    fontSize: "36px",
+    fontSize: "clamp(32px, 6vw, 44px)",
     transition: "all 0.3s ease",
     cursor: "pointer",
   },
   footer: {
     textAlign: "center",
-    padding: "40px 20px",
+    padding: "50px 20px",
     color: "#8b949e",
     position: "relative",
     zIndex: 1,
+    background: "rgba(0,0,0,0.2)",
+  },
+  starText: {
+    fontSize: "18px",
+    fontWeight: "600",
+    marginBottom: "15px",
+    cursor: "pointer",
   },
   copyright: {
-    marginTop: "10px",
     fontSize: "14px",
   },
 };
