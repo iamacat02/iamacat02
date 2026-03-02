@@ -1,0 +1,107 @@
+<svg fill="none" viewBox="0 0 800 400" width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <foreignObject width="100%" height="100%">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <style>
+        .card {
+          background: rgba(13, 17, 23, 0.8);
+          border: 1px solid rgba(102, 126, 234, 0.3);
+          border-radius: 16px;
+          padding: 24px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          color: white;
+          margin-bottom: 20px;
+        }
+        .row {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+          opacity: 0;
+          animation: slideIn 0.8s ease forwards;
+        }
+        .row:nth-child(1) { animation-delay: 0.2s; }
+        .row:nth-child(2) { animation-delay: 0.4s; }
+        .row:nth-child(3) { animation-delay: 0.6s; }
+        .row:nth-child(4) { animation-delay: 0.8s; }
+
+        .label {
+          width: 200px;
+          font-weight: bold;
+          color: #8b949e;
+          font-size: 14px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+        .tags {
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+        .tag {
+          background: rgba(102, 126, 234, 0.1);
+          border: 1px solid rgba(102, 126, 234, 0.4);
+          padding: 4px 12px;
+          border-radius: 20px;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          animation: pulse 3s infinite ease-in-out;
+        }
+        @keyframes slideIn {
+          from { opacity: 0; transform: translateX(-20px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); border-color: rgba(102, 126, 234, 0.4); }
+          50% { transform: scale(1.05); border-color: rgba(240, 147, 251, 0.8); box-shadow: 0 0 10px rgba(240, 147, 251, 0.3); }
+        }
+        .icon {
+          width: 16px;
+          height: 16px;
+        }
+      </style>
+      <div class="card">
+        <div class="row">
+          <div class="label">📱 Mobile</div>
+          <div class="tags">
+            <div class="tag">Flutter</div>
+            <div class="tag">Kotlin</div>
+            <div class="tag">Java</div>
+            <div class="tag">Android</div>
+            <div class="tag">Compose</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">🌐 Web</div>
+          <div class="tags">
+            <div class="tag">React</div>
+            <div class="tag">HTML5</div>
+            <div class="tag">CSS3</div>
+            <div class="tag">JavaScript</div>
+            <div class="tag">Node.js</div>
+            <div class="tag">Python</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">🗄️ Databases</div>
+          <div class="tags">
+            <div class="tag">MySQL</div>
+            <div class="tag">PostgreSQL</div>
+            <div class="tag">MongoDB</div>
+            <div class="tag">Firebase</div>
+            <div class="tag">APIs</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">🏗️ Architecture</div>
+          <div class="tags">
+            <div class="tag">MVVM</div>
+            <div class="tag">MVC</div>
+            <div class="tag">Clean Arch</div>
+            <div class="tag">State Mgmt</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </foreignObject>
+</svg>

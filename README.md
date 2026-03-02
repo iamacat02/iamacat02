@@ -12,48 +12,11 @@
 
 ---
 
-## 🛠️ Tech Stack
-
-### 📱 Mobile Development
-
 <div align="center">
-
-|                                           Flutter                                           |                                          Kotlin                                          |                                        Java                                        |                                           Android                                           |                                         Jetpack Compose                                          |
-| :-----------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
-| ![Flutter](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg) | ![Kotlin](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg) | ![Java](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg) | ![Android](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg) | ![Compose](https://upload.wikimedia.org/wikipedia/commons/e/e5/Jetpack_Compose_logo.png) |
-
+  <img src="tech-stack.svg" width="800" alt="Tech Stack and Architecture" />
 </div>
 
-```markdown
-┌─────────────────────────────────────────────────────────────┐
-│ 🎮 Mobile: Flutter ⚡ Kotlin ⚡ Java ⚡ Android ⚡ Compose │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### 🌐 Web Development
-
-```markdown
-┌─────────────────────────────────────────────────────────────┐
-│ 🌐 Frontend: React ⚡ HTML5 ⚡ CSS3 ⚡ JavaScript │
-│ 🌐 Backend: Node.js ⚡ Python │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### 🗄️ Databases & APIs
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  🗄️ MySQL ⚡ PostgreSQL ⚡ MongoDB ⚡ Firebase ⚡ APIs       │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### 🏗️ Architecture & Patterns
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  📐 MVVM ⚡ MVC ⚡ Clean Architecture ⚡ State Management    │
-└─────────────────────────────────────────────────────────────┘
-```
+---
 
 ---
 
