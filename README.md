@@ -58,10 +58,10 @@
 
 <div align="center">
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/iamacat02)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/iamacat02)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/iamacat02)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:iamacat02@email.com)
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+  <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter" />
+  <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
 
 </div>
 
@@ -72,10 +72,6 @@
 > ### 🌟 Thanks for visiting my Special Repo!
 > **Let's build something amazing together!** 🚀
 
-![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=iamacat02.iamacat02&style=for-the-badge)
-
----
-
-**⭐ Star this repo if you like it!**
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=iamacat02.iamacat02&style=for-the-badge" alt="Visitor Count" />
 
 </div>
